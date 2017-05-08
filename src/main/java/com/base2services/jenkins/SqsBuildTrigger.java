@@ -267,8 +267,9 @@ public class SqsBuildTrigger extends Trigger<AbstractProject> implements GitHubT
 
         @Override
         public boolean configure(StaplerRequest req, JSONObject json) throws FormException {
-            JSONObject sqs = json.getJSONObject("sqsProfiles");
-            JSONObject hookMode = json.getJSONObject("sqsHookMode");
+        	final Object sqs = json.get("sqsProfiles");
+        	final JSONObject hookMode = json.getJSONObject("sqsHookMode");
+        	
             manageHook = "auto".equals(hookMode.getString("value"));
             sqsProfiles = req.bindJSONToList(SqsProfile.class,sqs);
             credentials = req.bindJSONToList(Credential.class,hookMode.get("credentials"));
